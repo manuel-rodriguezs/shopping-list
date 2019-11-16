@@ -6,20 +6,12 @@ RUN apk update \
         libxml2-dev freetype-dev libpng-dev libjpeg-turbo-dev g++ make autoconf \
         postgresql postgresql-contrib postgresql-dev\
     && docker-php-source extract \
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug \
-    && docker-php-source delete \
     && docker-php-ext-install pdo_pgsql soap intl zip \
-    && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "xdebug.remote_port=10000" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "xdebug.remote_handler=dbgp" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "xdebug.remote_connect_back=0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && rm -rf /tmp/*
 
 CMD ["php-fpm", "-F"]
 
-WORKDIR /var/www/the-shopping-list
+WORKDIR /var/www/shopping-list
 
 EXPOSE 9000

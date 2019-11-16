@@ -3,7 +3,7 @@ services:
     php:
         build: ./docker-conf/php-fpm
         volumes:
-            - ./:/var/www/the-shopping-list
+            - ./:/var/www/shopping-list
             - ./docker-conf/php-fpm/php.ini:/usr/local/etc/php/php.ini
         depends_on:
             - db
@@ -12,8 +12,8 @@ services:
         ports:
             - "8888:80"
         volumes:
-            - ./:/var/www/the-shopping-list
-            - ./docker-conf/nginx/the-shopping-list.conf:/etc/nginx/conf.d/default.conf
+            - ./:/var/www/shopping-list
+            - ./docker-conf/nginx/shopping-list.conf:/etc/nginx/conf.d/default.conf
         depends_on:
             - php
     db:

@@ -1,11 +1,10 @@
-# the-shopping-list
+# Shopping list
 Symfony 4 test
 
 `docker-compose up -d`
 
 ```
-docker exec the-shopping-list_php_1 \
-    composer install \
-    && chmod +x bin/* \
+docker exec shopping-list_php_1 \
+       composer install \
     && bin/console doctrine:database:create
 ```
