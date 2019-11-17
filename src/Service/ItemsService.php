@@ -11,8 +11,6 @@ class ItemsService
     {
         foreach ($items as $item)
             foreach ($supermarket->getPrices() as $price) {
-                var_dump($price->getKey());
-                die();
                 if ($item->getKey() == $price->getKey())
                     $item->setPrice($price->getPrice());
             }

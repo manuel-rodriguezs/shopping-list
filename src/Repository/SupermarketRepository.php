@@ -27,6 +27,9 @@ class SupermarketRepository extends ServiceEntityRepository
 
     public function remove(Supermarket $supermarket)
     {
+        foreach($supermarket->getPrices() as $price)
+            $this->getEntityManager()->remove($price);
+
         $this->getEntityManager()->remove($supermarket);
         $this->getEntityManager()->flush();
     }

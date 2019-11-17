@@ -35,7 +35,7 @@ class PriceController extends AbstractController
             if ($price) {
                 $view = View::create($price, Response::HTTP_OK);
             } else {
-                $view = View::create('Not found.', Response::HTTP_NOT_FOUND);
+                $view = View::create(['message'=> 'Not found.'], Response::HTTP_NOT_FOUND);
             }
         } catch (\Exception $e) {
             $view = View::create(['message'=> $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -102,7 +102,7 @@ class PriceController extends AbstractController
                 $this->priceRepository->remove($price);
                 $view = View::create(['message'=> 'Deleted!'], Response::HTTP_OK);
             } else {
-                $view = View::create('Not found.', Response::HTTP_NOT_FOUND);
+                $view = View::create(['message'=>'Not found.'], Response::HTTP_NOT_FOUND);
             }
         } catch (\Exception $e) {
             $view = View::create(['message'=> $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);

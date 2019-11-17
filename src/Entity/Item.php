@@ -64,7 +64,7 @@ class Item
 
     public function setPrice($price)
     {
-        $this->price;
+        $this->price = $price;
     }
 
     public function getPrice()

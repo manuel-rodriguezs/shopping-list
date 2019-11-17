@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
@@ -32,6 +33,11 @@ class Supermarket
      */
     private $prices;
 
+    public function __construct()
+    {
+        $this->prices = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -58,9 +64,11 @@ class Supermarket
     {
         $average = 0;
 
-        foreach ($this->prices as $price) $average += $price->getPrice();
+        if (count($this->prices) > 0) {
+            foreach ($this->prices as $price) $average += $price->getPrice();
 
-        $average = $average / count($this->prices);
+            $average = $average / count($this->prices);
+        }
 
         return money_format('%.2n', $average);
     }
@@ -74,6 +82,6 @@ class Supermarket
             if ($cheaper->getPrice() > $price->getPrice()) $cheaper = $price;
         }
 
-        return $cheaper->getKey();
+        return ($cheaper) ? $cheaper->getKey() : "";
     }
 }

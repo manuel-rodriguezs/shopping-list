@@ -3,8 +3,8 @@
 {% block stylesheets %}
     <style>
         .item-list a { visibility: hidden; }
-        .item-list:hover a { visibility: visible; }
-        .item-list:hover { background-color: rgba(0,0,0,.075); }
+        .item-list:hover a, .item-list:active a { visibility: visible; }
+        .item-list:hover, .item-list:active { background-color: rgba(0,0,0,.075); }
         .item-list { min-height: 64px; }
     </style>
 {% endblock %}
@@ -30,7 +30,7 @@
 {% block body %}
     <div class="container">
         <div class="row justify-content-center">
-            <h1 class="display-3">Shopping List</h1>
+            <h1 class="display-4">Shopping List</h1>
         </div>
         <br /><br />
 
@@ -52,6 +52,8 @@
                     <span class="badge badge-secondary float-right" style="margin-right: 5px">
                         {% if item.price == null %}
                             -.-- €
+                        {% else %}
+                            {{ item.price }} €
                         {% endif %}
                     </span>
                 </li>

@@ -10,6 +10,7 @@ use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 class SupermarketController extends AbstractFOSRestController
 {
@@ -54,13 +55,15 @@ class SupermarketController extends AbstractFOSRestController
             $errors = $validator->validate($supermarket);
             if (count($errors) > 0) {
                 $message = "";
-                foreach ($errors as $error) $message .= $error->getMessage()."\r";
+                foreach ($errors as $error) $message .= $error->getMessage() . "\r";
                 throw new \Exception($message);
             }
 
             $this->supermarketRepository->save($supermarket);
 
             $view = View::create($supermarket, Response::HTTP_CREATED);
+        } catch (UniqueConstraintViolationException $e) {
+            $view = View::create(['message'=> 'Duplicated Entry!'], Response::HTTP_UNPROCESSABLE_ENTITY);
         } catch (\Exception $e) {
             $view = View::create(['message'=> $e->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
