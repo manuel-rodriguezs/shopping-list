@@ -9,11 +9,39 @@
     </style>
 {% endblock %}
 
+{% block javascripts %}
+    <script type="application/javascript">
+
+        var indexUrl = "{{ path('items') }}";
+
+        $(document).ready(function () {
+            $('#selectSupermarkets').change(function () {
+                var supermarketId = $(this).val();
+
+                var url = indexUrl;
+                if (supermarketId != -1) url += '/' + $(this).val();
+
+                window.location.href = url;
+            })
+        });
+    </script>
+{% endblock %}
+
 {% block body %}
     <div class="container">
         <div class="row justify-content-center">
             <h1 class="display-3">Shopping List</h1>
         </div>
+        <br /><br />
+
+        <select class="custom-select" id="selectSupermarkets"{% if supermarkets|length == 0 %} disabled{% endif %}>
+            <option value="-1">Select a supermarket</option>
+            {% for supermarket in supermarkets %}
+            <option value="{{ supermarket.id }}"{% if supermarket.id == supermarketId %} selected{% endif %}>{{ supermarket.name }}</option>
+            {% endfor %}
+        </select>
+        <br /><br />
+
         <div class="card">
             <ul class="list-group list-group-flush">
 
@@ -21,7 +49,11 @@
                 <li class="list-group-item item-list" style="padding-top: 20px">
                     <span style="margin-top: 50px">{{ item.description }}</span>
                     <a href="{{ path('item.delete', {'id': item.id}) }}" class="btn btn-danger float-right" style="margin-top: -10px"><i class="fas fa-trash-alt"></i></a>
-                    <span class="badge badge-secondary float-right" style="margin-right: 5px">-.-- €</span>
+                    <span class="badge badge-secondary float-right" style="margin-right: 5px">
+                        {% if item.price == null %}
+                            -.-- €
+                        {% endif %}
+                    </span>
                 </li>
                 {% endfor %}
 
