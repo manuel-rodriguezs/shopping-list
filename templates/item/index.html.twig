@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <style>
+        .item-list a { visibility: hidden; }
+        .item-list:hover a { visibility: visible; }
+        .item-list:hover { background-color: rgba(0,0,0,.075); }
+        .item-list { min-height: 64px; }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <h1 class="display-3">Shopping List</h1>
+        </div>
+        <div class="card">
+            <ul class="list-group list-group-flush">
+
+                {% for item in items %}
+                <li class="list-group-item item-list" style="padding-top: 20px">
+                    <span style="margin-top: 50px">{{ item.description }}</span>
+                    <a href="{{ path('item.delete', {'id': item.id}) }}" class="btn btn-danger float-right" style="margin-top: -10px"><i class="fas fa-trash-alt"></i></a>
+                    <span class="badge badge-secondary float-right" style="margin-right: 5px">-.-- €</span>
+                </li>
+                {% endfor %}
+
+                <li class="list-group-item">
+                    <form action="{{ path('item.post') }}" method="post">
+                        <div class="input-group mb-3">
+                            <input name="description" type="text" class="form-control" placeholder="New item" aria-label="New item" aria-describedby="button-addon1" maxlength="30">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary" type="submit" id="button-addon1"><i class="fas fa-cart-plus"></i> Add</button>
+                            </div>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}

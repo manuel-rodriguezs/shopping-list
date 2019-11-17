@@ -12,8 +12,6 @@ class HomeController extends AbstractController
      */
     public function index()
     {
-        return $this->render('home/index.html.twig', [
-            'hello' => 'Hola Mundo!',
-        ]);
+        return $this->redirectToRoute('items');
     }
 }
