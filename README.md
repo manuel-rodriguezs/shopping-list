@@ -36,12 +36,12 @@ http://localhost:8888
 
 ### What's about the REST API?
 
-This app implemts six endpoints of an REST API. Let's see each one by one.
+This app implemts six endpoints of a REST API. Let's see each one by one.
 
-First of all, here two considerations:
+First of all, here're two considerations:
 
-* All the comunication is in JSON, so, you must add the `Content-Type: application/json` headerto all the requests.
-* The endpoints are behind the url `http://localhost:8888/api/`
+* All the comunication is in JSON, so, you must add the `Content-Type: application/json` header the requests that need Param Object.
+* The endpoints are behind the url `http://localhost:8888/api`
 
 ### [POST] /supermarket
 
@@ -64,7 +64,7 @@ HTTP Response Code: 200
 ```json
 {
   "id": 3,
-  "name": "Mercadona",
+  "name": "Carrefour",
   "prices": [],
   "averagePrice": "0.00",
   "cheaperItem": ""
@@ -158,7 +158,9 @@ HTTP Response Code: 200
 ##### Param object
 
 supermaket_id=[integer|required]
+
 name=[string|required]
+
 price=[float|required]
 
 ##### Sample Request JSON
