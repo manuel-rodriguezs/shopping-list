@@ -23,10 +23,17 @@ docker exec slist_php_1 composer install
 
 ```
 docker exec slist_php_1 php bin/console doctrine:database:create
-```
-```
+
 docker exec slist_php_1 php bin/console doctrine:migrations:migrate -q
 ```
+
+#### Step 4 (Optional): Create the database schema for tests
+```
+docker exec slist_php_1 php bin/console doctrine:database:create --env=test
+
+docker exec slist_php_1 php bin/console doctrine:migrations:migrate -q --env=test
+```
+
 
 **That's all.**
 
