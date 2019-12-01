@@ -95,21 +95,14 @@ class ItemController extends AbstractController
      */
     public function delete(Item $item = null)
     {
-        try {
-            if ($item)
-            {
-                $this->itemRepository->remove($item);
+        if ($item)
+        {
+            $this->itemRepository->remove($item);
 
-            } else {
-                $this->addFlash(
-                    'warning',
-                    'Item not found.'
-                );
-            }
-        } catch (\Exception $e) {
+        } else {
             $this->addFlash(
-                'danger',
-                'Error: ' . $e->getMessage()
+                'warning',
+                'Item not found.'
             );
         }
 

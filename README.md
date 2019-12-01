@@ -16,22 +16,24 @@ docker-compose up -d
 
 #### Step 2: Install Symfony dependencies
 ```
-docker exec slist_php_1 composer install
+docker exec shoplist_php_1 composer install
 ```
 
 #### Step 3: Create the database schema
 
 ```
-docker exec slist_php_1 php bin/console doctrine:database:create
+docker exec shoplist_php_1 php bin/console doctrine:database:create
 
-docker exec slist_php_1 php bin/console doctrine:migrations:migrate -q
+docker exec shoplist_php_1 php bin/console doctrine:migrations:migrate -q
 ```
 
 #### Step 4 (Optional): Create the database schema for tests
 ```
-docker exec slist_php_1 php bin/console doctrine:database:create --env=test
+docker exec shoplist_php_1 php bin/console doctrine:database:create --env=test
 
-docker exec slist_php_1 php bin/console doctrine:migrations:migrate -q --env=test
+docker exec shoplist_php_1 php bin/console doctrine:migrations:migrate -q --env=test
+
+docker exec shoplist_php_1 php bin/console doctrine:fixtures:load --env=test -q
 ```
 
 

@@ -30,15 +30,10 @@ class PriceController extends AbstractController
      */
     public function getPrice(Price $price = null): View
     {
-        $view = "{}";
-        try {
-            if ($price) {
-                $view = View::create($price, Response::HTTP_OK);
-            } else {
-                $view = View::create(['message'=> 'Not found.'], Response::HTTP_NOT_FOUND);
-            }
-        } catch (\Exception $e) {
-            $view = View::create(['message'=> $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        if ($price) {
+            $view = View::create($price, Response::HTTP_OK);
+        } else {
+            $view = View::create(['message'=> 'Not found.'], Response::HTTP_NOT_FOUND);
         }
 
         return $view;
@@ -49,7 +44,7 @@ class PriceController extends AbstractController
      * @param Request $request
      * @return View
      */
-    public function postSupermarket(Request $request, ValidatorInterface $validator, StringUtils $stringUtils): View
+    public function postPrice(Request $request, ValidatorInterface $validator, StringUtils $stringUtils): View
     {
         $view = "{}";
         try {
@@ -96,16 +91,11 @@ class PriceController extends AbstractController
      */
     public function deletePrice(Price $price = null): View
     {
-        $view = "{}";
-        try {
-            if ($price) {
-                $this->priceRepository->remove($price);
-                $view = View::create(['message'=> 'Deleted!'], Response::HTTP_OK);
-            } else {
-                $view = View::create(['message'=>'Not found.'], Response::HTTP_NOT_FOUND);
-            }
-        } catch (\Exception $e) {
-            $view = View::create(['message'=> $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        if ($price) {
+            $this->priceRepository->remove($price);
+            $view = View::create(['message'=> 'Deleted!'], Response::HTTP_OK);
+        } else {
+            $view = View::create(['message'=>'Not found.'], Response::HTTP_NOT_FOUND);
         }
 
         return $view;

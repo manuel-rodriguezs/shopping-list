@@ -28,13 +28,8 @@ class SupermarketController extends AbstractFOSRestController
      */
     public function getSupermarkets(): View
     {
-        $view = "{}";
-        try {
-            $supermarkets = $this->supermarketRepository->findAll();
-            $view = View::create($supermarkets, Response::HTTP_OK);
-        } catch (\Exception $e) {
-            $view = View::create(['message'=> $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
+        $supermarkets = $this->supermarketRepository->findAll();
+        $view = View::create($supermarkets, Response::HTTP_OK);
 
         return $view;
     }
@@ -64,8 +59,6 @@ class SupermarketController extends AbstractFOSRestController
             $view = View::create($supermarket, Response::HTTP_CREATED);
         } catch (UniqueConstraintViolationException $e) {
             $view = View::create(['message'=> 'Duplicated Entry!'], Response::HTTP_UNPROCESSABLE_ENTITY);
-        } catch (\Exception $e) {
-            $view = View::create(['message'=> $e->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         return $view;
@@ -77,18 +70,13 @@ class SupermarketController extends AbstractFOSRestController
      */
     public function deleteSupermarket(Supermarket $supermarket = null): View
     {
-        $view = "{}";
-        try {
-            if ($supermarket)
-            {
-                $this->supermarketRepository->remove($supermarket);
-                $view = View::create(['message'=> 'Deleted!'], Response::HTTP_OK);
+        if ($supermarket)
+        {
+            $this->supermarketRepository->remove($supermarket);
+            $view = View::create(['message'=> 'Deleted!'], Response::HTTP_OK);
 
-            } else {
-                $view = View::create(['message'=> 'Not found.'], Response::HTTP_NOT_FOUND);
-            }
-        } catch (\Exception $e) {
-            $view = View::create(['message'=> $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        } else {
+            $view = View::create(['message'=> 'Not found.'], Response::HTTP_NOT_FOUND);
         }
 
         return $view;
